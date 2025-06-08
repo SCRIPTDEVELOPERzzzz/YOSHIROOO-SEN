@@ -1,0 +1,43 @@
+local a=loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local b=a:CreateWindow({
+    Name="RMPG by Sen And Yoshiro",
+    Icon=0,
+    LoadingTitle="RMPG v0.1",
+    LoadingSubtitle="by Sen And Yoshiro",
+    Theme="Ocean",
+    ToggleUIKeybind="K",
+    DisableRayfieldPrompts=false,
+    DisableBuildWarnings=false,
+    ConfigurationSaving={Enabled=true,FolderName=nil,FileName="Big Hub"},
+    Discord={Enabled=false,Invite="noinvitelink",RememberJoins=true},
+    KeySystem=true,
+    KeySettings={
+        Title="RMPG Key System",
+        Subtitle="Key System",
+        Note="OBTAIN THE KEY IN MY GITHUB RESPIRATORY!!",
+        FileName="Key",
+        SaveKey=true,
+        GrabKeyFromSite=true,
+        Key={"https://raw.githubusercontent.com/SCRIPTDEVELOPERzzzz/Sen-Yoshiro/refs/heads/main/RMPG.lua"}
+    }
+})
+local c=b:CreateTab("Farm",4483362458)local d=b:CreateTab("Tools+Rock++",4483362458)local e=b:CreateTab("Eggs",4483362458)local f=b:CreateTab("-Teleport",4483362458)local g=b:CreateTab("Killer",4483362458)local h=b:CreateTab("DayNightMorning",4483362458)local i=b:CreateTab("Credits",4483362458)
+local j=game.Players.LocalPlayer
+local k={Weight=false,Pushups=false,Situps=false,Handstands=false}
+local l={}local m={}local function n(o)k[o]=false end
+local function p(q,r)k[q]=true;l[q]=coroutine.create(function()while k[q]do for _,s in pairs(j.Backpack:GetChildren())do if s.ClassName=="Tool"and s.Name==r then s.Parent=j.Character end end;j.muscleEvent:FireServer("rep")wait(.1)end end)coroutine.resume(l[q])end
+c:CreateSection("AutoLiftTools")
+c:CreateToggle({Name="Rep Weight (On/Off)",CurrentValue=false,Callback=function(t)if t then p("Weight","Weight")else n("Weight")end end})
+c:CreateToggle({Name="Rep Pushups (On/Off)",CurrentValue=false,Callback=function(t)if t then p("Pushups","Pushups")else n("Pushups")end end})
+c:CreateToggle({Name="Rep Situps (On/Off)",CurrentValue=false,Callback=function(t)if t then p("Situps","Situps")else n("Situps")end end})
+c:CreateToggle({Name="Rep Handstands (On/Off)",CurrentValue=false,Callback=function(t)if t then p("Handstands","Handstands")else n("Handstands")end end})
+c:CreateButton({Name="Start/Stop Auto Click (Equipped Tool)",Callback=function()if not _G.FarmTabAutoClick then _G.FarmTabAutoClick=true;a:Notify({Title="Auto Click",Content="Auto Click started. Press the button again to stop.",Duration=3})spawn(function()while _G.FarmTabAutoClick do local u=j.Character;if u then for _,v in pairs(u:GetChildren())do if v.ClassName=="Tool"and v.Activate then if v:FindFirstChild("attackTime")then v.attackTime.Value=0 end;v:Activate()end end end;wait(.05)end end)else _G.FarmTabAutoClick=false;a:Notify({Title="Auto Click",Content="Auto Click stopped.",Duration=3})end end})
+c:CreateSection("FarmRebirths")local w,x=false,false;local y=0
+c:CreateInput({Name="Set Rebirth Stop Point",PlaceholderText="Enter rebirths to stop at (number)",RemoveTextAfterFocusLost=false,Callback=function(z)y=tonumber(z)or 0 end})
+c:CreateToggle({Name="Auto Rebirth (On/Off)",CurrentValue=false,Callback=function(A)w=A;while w do wait(.1)local B=j:FindFirstChild("leaderstats")local C=B and B:FindFirstChild("Rebirths")if y>0 and C and C.Value>=y then w=false;break end;game:GetService("ReplicatedStorage").rEvents.rebirthRemote:InvokeServer("rebirthRequest")end end})
+c:CreateToggle({Name="Auto Target Rebirth (On/Off)",CurrentValue=false,Callback=function(D)x=D;if not D then return end;local B=j:FindFirstChild("leaderstats")local C=B and B:FindFirstChild("Rebirths")if not C or y<=0 then a:Notify({Title="Auto Target Rebirth",Content="Please set a valid rebirth stop point and make sure Rebirths stat exists.",Duration=5})x=false;return end;spawn(function()while x and C.Value<y do wait(.1)game:GetService("ReplicatedStorage").rEvents.rebirthRemote:InvokeServer("rebirthRequest")end;if x and C.Value>=y then a:Notify({Title="Auto Target Rebirth",Content="Target rebirth reached!",Duration=5})end;x=false end)end})
+c:CreateSection("FarmRocks")
+local E={{name="Legend",durability=1000000,label="Legend Gym Rock"},{name="King",durability=5000000,label="Muscle King Gym Rock"},{name="Jungle",durability=10000000,label="Ancient Jungle Rock"},{name="TinyRock",durability=0,label="Tiny Rock"},{name="PunchingRock",durability=10,label="Punching Rock"},{name="LargeRock",durability=100,label="Large Rock"},{name="GoldenRock",durability=5000,label="Golden Rock"},{name="FrozenRock",durability=150000,label="Frozen Rock"},{name="MythicalRock",durability=400000,label="Mythical Rock"},{name="EternalRock",durability=750000,label="Eternal Rock"},}
+getgenv().autoFarmRocks=getgenv().autoFarmRocks or{}
+for _,F in ipairs(E)do c:CreateToggle({Name=F.label.." (On/Off)",CurrentValue=false,Callback=function(G)getgenv().autoFarmRocks[F.name]=G;if G then task.spawn(function()while getgenv().autoFarmRocks[F.name]do task.wait(.1)if not getgenv().autoFarmRocks[F.name]then break end;if j:FindFirstChild("Durability")and j.Durability.Value>=F.durability then for _,H in pairs(game:GetService("Workspace").machinesFolder:GetDescendants())do if H.Name=="neededDurability"and H.Value==F.durability and j.Character and j.Character:FindFirstChild("LeftHand") and j.Character:FindFirstChild("RightHand")then firetouchinterest(H.Parent.Rock,j.Character.RightHand,0)firetouchinterest(H.Parent.Rock,j.Character.RightHand,1)firetouchinterest(H.Parent.Rock,j.Character.LeftHand,0)firetouchinterest(H.Parent.Rock,j.Character.LeftHand,1)end end end end end)end end})end
+c:CreateToggle({Name="Auto Fast Punch",CurrentValue=false,Flag="AutoFastPunch",Callback=function(I)_G.fastHitActive=I;if I then coroutine.wrap(function()while _G.fastHitActive do local J=j.Backpack:FindFirstChild("Punch")if J then J.Parent=j.Character;if J:FindFirstChild("attackTime")then J.attackTime.Value=0 end end;wait()end end)()coroutine.wrap(function()while _G.fastHitActive do j.muscleEvent:FireServer("punch","rightHand")j.muscleEvent:FireServer("punch","leftHand")local K=j.Character;if K then local L=K:FindFirstChild("Punch")if L then L:Activate()end end;wait()end end)()coroutine.wrap(function()while _G.fastHitActive do j.muscleEvent:FireServer("rep")wait()end end)()else local K=j.Character;local L=K and K:FindFirstChild("Punch")if L then L.Parent=j.Backpack end end end})
